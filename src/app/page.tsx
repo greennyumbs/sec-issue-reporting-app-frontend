@@ -1,113 +1,141 @@
-import Image from "next/image";
+"use client"; // Enable client components for SWR
 
-export default function Home() {
-  return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">src/app/page.tsx</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:size-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
+import React, { useState, useEffect } from "react";
+import useSWR from "swr";
+import { useRouter } from "next/navigation";
 
-      <div className="relative z-[-1] flex place-items-center before:absolute before:h-[300px] before:w-full before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-full after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 sm:before:w-[480px] sm:after:w-[240px] before:lg:h-[360px]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
+import { WorkItem } from "./types";
+import WorkCard from "./components/Workcard";
+import NewWorkItemForm from "./components/NewWorkItemForm";
 
-      <div className="mb-32 grid text-center lg:mb-0 lg:w-full lg:max-w-5xl lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Docs{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
+const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Learn{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
+const WorkListPage: React.FC = () => {
+  const router = useRouter();
+  // const {
+  //   data: workItems,
+  //   error,
+  //   mutate,
+  // } = useSWR<WorkItem[]>("/api/work", fetcher);
+  const [filter, setFilter] = useState<
+    "ALL" | "PENDING" | "IN PROGRESS" | "COMPLETED"
+  >("ALL");
+  const mockData: WorkItem[] = [
+    {
+      id: 1,
+      machineId: "M12345",
+      machineName: "Packaging Machine A",
+      createdBy: { name: "Alice Johnson", position: "Employee" },
+      issueDetailDescription:
+        "Conveyor belt jammed, causing production delays.",
+      status: "PENDING",
+      createdTimestamp: "2023-11-25T10:30:00Z",
+    },
+    {
+      id: 2,
+      machineId: "M54321",
+      machineName: "Labeling Machine B",
+      createdBy: { name: "Bob Smith", position: "Employee" },
+      issueDetailDescription: "Labels misaligned, need recalibration.",
+      assignee: { name: "Eva Williams", id: 101 },
+      status: "IN PROGRESS",
+      createdTimestamp: "2023-11-24T14:15:00Z",
+    },
+    {
+      id: 3,
+      machineId: "M98765",
+      machineName: "Filling Machine C",
+      createdBy: { name: "Charlie Brown", position: "Technician" },
+      issueDetailDescription: "Routine maintenance required.",
+      fixDetailDescription: "Replaced worn-out gasket and refilled lubricant.",
+      assignee: { name: "David Lee", id: 102 },
+      status: "COMPLETED",
+      createdTimestamp: "2023-11-20T09:45:00Z",
+      completedTimestamp: "2023-11-22T16:00:00Z",
+    },
+    {
+      id: 4,
+      machineId: "M11111",
+      machineName: "Sorting Machine D",
+      createdBy: { name: "Emma Davis", position: "Employee" },
+      issueDetailDescription: "Software error causing incorrect sorting.",
+      status: "CANCELED",
+      createdTimestamp: "2023-11-18T11:22:00Z",
+    },
+  ];
 
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Templates{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Explore starter templates for Next.js.
-          </p>
-        </a>
+  // useEffect(() => {
+  //   // const updateWorkItems = (updatedWorkItem: WorkItem) => {
+  //   //   mutate((prevWorkItems) =>
+  //   //     prevWorkItems?.map((item) =>
+  //   //       item.id === updatedWorkItem.id ? updatedWorkItem : item
+  //   //     )
+  //   //   );
+  //   // };
 
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Deploy{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-balance text-sm opacity-50">
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
+  //   // Subscribe to real-time updates (e.g., WebSockets, SSE)
+  //   // ... and call updateWorkItems when a work item changes
+
+  //   return () => {
+  //     // Unsubscribe from real-time updates
+  //   };
+  // }, [mutate]);
+
+  const handleNewWorkItem = async (newWorkItem: WorkItem) => {
+    const response = await fetch("/api/work", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(newWorkItem),
+    });
+
+    if (response.ok) {
+      const createdWorkItem = await response.json();
+      // mutate((prevWorkItems) => [createdWorkItem, ...(prevWorkItems || [])]);
+    } else {
+      // Handle error
+    }
+  };
+
+  const handleDeleteWorkItem = async (workItemId: number) => {
+    const response = await fetch(`/api/work/${workItemId}`, {
+      method: "DELETE",
+    });
+    if (response.ok) {
+      // mutate((prevWorkItems) =>
+      //   prevWorkItems?.filter((item) => item.id !== workItemId)
+      // );
+    } else {
+      // Handle error
+    }
+  };
+
+  const filteredWorkItems = mockData?.filter((item) =>
+    filter === "ALL" ? true : item.status === filter
   );
-}
+
+  // if (error) return <div>Failed to load work items</div>;
+  // if (!workItems) return <div>Loading work items...</div>;
+
+  return (
+    <div className="container mx-auto p-4">
+      <h1 className="text-2xl font-bold mb-4">Work List</h1>
+
+      {/* Optional Filter Component */}
+      {/* <WorkFilter filter={filter} setFilter={setFilter} /> */}
+
+      <NewWorkItemForm onNewWorkItem={handleNewWorkItem} />
+
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
+        {filteredWorkItems?.map((workItem) => (
+          <WorkCard
+            key={workItem.id}
+            workItem={workItem}
+            onDelete={handleDeleteWorkItem}
+          />
+        ))}
+      </div>
+    </div>
+  );
+};
+
+export default WorkListPage;
