@@ -29,7 +29,7 @@ const LoginPage: React.FC = () => {
 
       // if (response.ok) {
       // Successful login, redirect to worklist page
-      router.push("/worklist");
+      router.push("/workList");
       // } else {
       //   const errorMessage = await response.text();
       //   setError(errorMessage || "Invalid credentials.");
