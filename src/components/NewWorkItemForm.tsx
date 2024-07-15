@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
-import { WorkItem } from "../types";
+import { WorkItem } from "@/app/types";
 
 interface NewWorkItemFormProps {
   onNewWorkItem: (newWorkItem: WorkItem) => Promise<void>;
@@ -73,7 +73,10 @@ const NewWorkItemForm: React.FC<NewWorkItemFormProps> = ({ onNewWorkItem }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="bg-white rounded-lg shadow p-4">
+    <form
+      onSubmit={handleSubmit}
+      className="bg-white rounded-lg shadow p-4 mb-4"
+    >
       <h2 className="text-lg font-semibold mb-2">Create New Work Item</h2>
       {submissionError && (
         <p className="text-red-500 text-xs">{submissionError}</p>

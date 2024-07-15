@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
-import { WorkItem } from "../types";
+import { WorkItem } from "@/app/types";
 
 interface WorkCardProps {
   workItem: WorkItem;
