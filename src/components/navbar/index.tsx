@@ -2,7 +2,7 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation"; // Import useRouter from next/navigation
 
-const Navbar: React.FC = () => {
+export const Navbar: React.FC = () => {
   const router = useRouter(); // Move useRouter here
 
   const handleLogout = async () => {
@@ -12,23 +12,18 @@ const Navbar: React.FC = () => {
   };
 
   return (
-    <nav>
-      <ul>
-        <li>
-          <Link href="/workList">Work List</Link>
-        </li>
-        <li>
-          <Link href="/workList2">Work List2</Link>
-        </li>
-        <li>
-          <Link href="/historyLog">History Log</Link>
-        </li>
-        <li>
-          <button onClick={handleLogout}>Logout</button>
-        </li>
-      </ul>
+    <nav className="flex justify-between mb-10">
+      <span>
+        <Link className="btn btn-primary mr-5 w-60" href="/workList">
+          Work List
+        </Link>
+        <Link className="btn btn-primary w-60" href="/historyLog">
+          History Log
+        </Link>
+      </span>
+      <button className="btn btn-primary btn-outline" onClick={handleLogout}>
+        Logout
+      </button>
     </nav>
   );
 };
-
-export default Navbar;
