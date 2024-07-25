@@ -1,94 +1,78 @@
-import { WorkItem } from "@/app/types";
 import { ConfirmationModal } from "@/components/confirmationModal";
+import { IssueTable } from "@/components/IssueTable";
 import { Navbar } from "@/components/navbar";
-import { WorkItemForm } from "@/components/workItemForm";
-import { WorkTable } from "@/components/workTable";
-import { mockWork } from "@/store/mock";
+import { NewIssueModal } from "@/components/NewIssueModal";
+import { Issue, useLogsStore } from "@/store/logsStore";
+import { Container, Box, Typography, Button } from "@mui/material";
 import { useState } from "react";
 
 export const WorkListDashboard: React.FC = () => {
-  const [workItems, setWorkItems] = useState<WorkItem[]>(mockWork);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isNewIssueModalOpen, setIsNewIssueModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
-  const [selectedWorkItem, setSelectedWorkItem] = useState<WorkItem | null>(
-    null
-  );
-  const [workItemToDelete, setWorkItemToDelete] = useState<WorkItem | null>(
-    null
-  );
+  const [selectedIssue, setSelectedIssue] = useState<Issue | null>(null);
+  const [IssueToDelete, setIssueToDelete] = useState<Issue | null>(null);
 
-  const handleNewWorkItem = (newItem: WorkItem) => {
-    setWorkItems([...workItems, newItem]);
-  };
+  // const handleEditIssue = (updatedItem: Issue) => {
+  //   setIssues(
+  //     Issues.map((item) => (item.id === updatedItem.id ? updatedItem : item))
+  //   );
+  // };
 
-  const handleEditWorkItem = (updatedItem: WorkItem) => {
-    setWorkItems(
-      workItems.map((item) => (item.id === updatedItem.id ? updatedItem : item))
-    );
-  };
+  // const handleDeleteIssue = async () => {
+  //   if (IssueToDelete) {
+  //     setIssues(Issues.filter((item) => item.id !== IssueToDelete.id));
+  //     setIsConfirmModalOpen(false);
+  //     setIssueToDelete(null);
+  //   }
+  // };
 
-  const handleDeleteWorkItem = async () => {
-    if (workItemToDelete) {
-      setWorkItems(workItems.filter((item) => item.id !== workItemToDelete.id));
-      setIsConfirmModalOpen(false);
-      setWorkItemToDelete(null);
-    }
-  };
-
-  const handleEditClick = (workItem: WorkItem) => {
-    setSelectedWorkItem(workItem);
+  const handleEditClick = (Issue: Issue) => {
+    setSelectedIssue(Issue);
     setIsEditModalOpen(true);
   };
 
-  const handleConfirmDeleteClick = (workItem: WorkItem) => {
-    setWorkItemToDelete(workItem);
+  const handleConfirmDeleteClick = (Issue: Issue) => {
+    setIssueToDelete(Issue);
     setIsConfirmModalOpen(true);
   };
 
   return (
-    <div className="container mx-auto p-4">
+    <>
       <Navbar />
-      <div className="flex justify-between items-center mb-4">
-        <h1 className="text-2xl font-bold">Work List</h1>
-        <button
-          onClick={() => setIsModalOpen(true)}
-          className="btn btn-primary"
-        >
-          Add New Work Item
-        </button>
-      </div>
-      <WorkTable
-        workItems={workItems}
-        onEdit={handleEditClick}
-        onConfirmDelete={handleConfirmDeleteClick}
+      <Container className="pt-[64px]">
+        <Box className="flex justify-between items-center py-[15px]">
+          <Typography variant="h4" component="h1">
+            Work List
+          </Typography>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() => setIsNewIssueModalOpen(true)}
+          >
+            Add New Work Item
+          </Button>
+        </Box>
+        <IssueTable onConfirmDelete={handleConfirmDeleteClick} />
+        {isNewIssueModalOpen && (
+          <NewIssueModal onClose={() => setIsNewIssueModalOpen(false)} />
+        )}
+        {/* TODO: Edit modal
+    {isEditModalOpen && selectedIssue && (
+      <NewIssueModal
+        open={isEditModalOpen}
+        item={selectedIssue}
+        onSave={editIssue}
+        onClose={() => setIsEditModalOpen(false)}
       />
-      {isModalOpen && (
-        <div className="modal modal-open">
-          <WorkItemForm
-            type="ADD"
-            onSave={handleNewWorkItem}
-            onClose={() => setIsModalOpen(false)}
-          />
-        </div>
-      )}
-      {isEditModalOpen && selectedWorkItem && (
-        <div className="modal modal-open">
-          <WorkItemForm
-            type="EDIT"
-            item={selectedWorkItem}
-            onSave={handleEditWorkItem}
-            onClose={() => setIsEditModalOpen(false)}
-          />
-        </div>
-      )}
-      {isConfirmModalOpen && (
-        <ConfirmationModal
-          isOpen={isConfirmModalOpen}
-          onConfirm={handleDeleteWorkItem}
-          onCancel={() => setIsConfirmModalOpen(false)}
-        />
-      )}
-    </div>
+    )} */}
+        {/* TODO: Delete Modal
+    <ConfirmationModal
+      open={isConfirmModalOpen}
+      onConfirm={handleDeleteIssue}
+      onCancel={() => setIsConfirmModalOpen(false)}
+    /> */}
+      </Container>
+    </>
   );
 };

@@ -1,6 +1,7 @@
 "use client";
 import Link from "next/link";
 import { useRouter } from "next/navigation"; // Import useRouter from next/navigation
+import { AppBar, Box, Button, Toolbar, Typography } from "@mui/material";
 
 export const Navbar: React.FC = () => {
   const router = useRouter(); // Move useRouter here
@@ -12,18 +13,20 @@ export const Navbar: React.FC = () => {
   };
 
   return (
-    <nav className="flex justify-between mb-10">
-      <span>
-        <Link className="btn btn-primary mr-5 w-60" href="/workList">
-          Work List
-        </Link>
-        <Link className="btn btn-primary w-60" href="/historyLog">
-          History Log
-        </Link>
-      </span>
-      <button className="btn btn-primary btn-outline" onClick={handleLogout}>
-        Logout
-      </button>
-    </nav>
+    <AppBar>
+      <Toolbar>
+        <Box className="flex grow gap-[10px]">
+          <Button color="inherit" component={Link} href="/workList">
+            Work List
+          </Button>
+          <Button color="inherit" component={Link} href="/historyLog">
+            History Log
+          </Button>
+        </Box>
+        <Button color="inherit" variant="outlined" onClick={handleLogout}>
+          Logout
+        </Button>
+      </Toolbar>
+    </AppBar>
   );
 };
