@@ -10,8 +10,14 @@ import {
   Typography,
   Chip,
   Box,
+  Select,
+  MenuItem,
 } from "@mui/material";
-import { useActiveIssuesStore } from "@/store/ActiveIssuesStore";
+import {
+  TechDetailProps,
+  useActiveIssuesStore,
+} from "@/store/ActiveIssuesStore";
+import { StatusDropdown } from "./SelectDropdown";
 
 export const ActiveIssuesTable: React.FC = () => {
   const formatTimestamp = (timestamp: string | undefined) => {
@@ -21,8 +27,8 @@ export const ActiveIssuesTable: React.FC = () => {
   const { activeIssues, fetchActiveIssues } = useActiveIssuesStore();
 
   useEffect(() => {
-    if (activeIssues.length === 0) fetchActiveIssues();
-  }, [activeIssues.length, fetchActiveIssues]);
+    fetchActiveIssues();
+  }, [activeIssues.length, activeIssues]);
 
   return (
     <Box className="overflow-scroll max-w-full mb-[15px]">
@@ -34,7 +40,7 @@ export const ActiveIssuesTable: React.FC = () => {
               <TableCell className="w-[300px]">Issue Details</TableCell>
               <TableCell className="w-[300px]">Fix Details</TableCell>
               <TableCell>Assignee</TableCell>
-              <TableCell className="w-[150px] text-center">Status</TableCell>
+              <TableCell className="w-[200px] text-center">Status</TableCell>
               <TableCell className="w-[120px]">Updated At</TableCell>
             </TableRow>
           </TableHead>
@@ -65,21 +71,10 @@ export const ActiveIssuesTable: React.FC = () => {
                   </Typography>
                 </TableCell>
                 <TableCell>
-                  <Chip
-                    label={Issue.status}
-                    color={
-                      Issue.status === "PENDING"
-                        ? "warning"
-                        : Issue.status === "IN PROGRESS"
-                        ? "primary"
-                        : Issue.status === "COMPLETED"
-                        ? "success"
-                        : Issue.status === "CANCELED"
-                        ? "error"
-                        : "default"
-                    }
-                    variant="outlined"
-                    className="w-[120px]"
+                  <StatusDropdown
+                    issueId={Issue.issue_id}
+                    status={Issue.status}
+                    techDetail={Issue.tech_detail || ""}
                   />
                 </TableCell>
                 <TableCell>
