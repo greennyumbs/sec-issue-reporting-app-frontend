@@ -8,9 +8,6 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
-  MenuItem,
-  Select,
-  SelectChangeEvent,
   TextField,
 } from "@mui/material";
 import { useActiveIssuesStore } from "@/store/ActiveIssuesStore";
@@ -88,19 +85,6 @@ export const NewIssueModal: React.FC<IssueFormProps> = ({ onClose }) => {
             fullWidth
             margin="normal"
           />
-          <Select
-            name="status"
-            value={issue.status}
-            onChange={
-              handleChange as (event: SelectChangeEvent<string>) => void
-            }
-            fullWidth
-          >
-            <MenuItem value="PENDING">Pending</MenuItem>
-            <MenuItem value="IN PROGRESS">In Progress</MenuItem>
-            <MenuItem value="COMPLETED">Completed</MenuItem>
-            <MenuItem value="CANCELED">Canceled</MenuItem>
-          </Select>
           <TextField
             name="issue_detail"
             label="Issue Detail Description"
