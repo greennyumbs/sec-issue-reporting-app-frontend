@@ -16,7 +16,7 @@ export const Navbar: React.FC = () => {
     <AppBar>
       <Toolbar>
         <Box className="flex grow gap-[10px]">
-          <Button color="inherit" component={Link} href="/workList">
+          <Button color="inherit" component={Link} href="/activeIssues">
             Work List
           </Button>
           <Button color="inherit" component={Link} href="/historyLog">

@@ -17,17 +17,14 @@ export type Issue = {
   };
 };
 
-// Define the store's state type
-interface LogsStoreProps {
+interface IssuesStoreProps {
   issues: Issue[];
   fetchIssues: () => void;
-  addIssue: (issue: Issue) => void;
-  addTechDetail: (issue: Issue) => void;
 }
 
 const url = process.env.NEXT_PUBLIC_BACKEND_URL;
 
-const useLogsStore = create<LogsStoreProps>()(
+const useIssuesStore = create<IssuesStoreProps>()(
   devtools((set) => ({
     issues: [],
     fetchIssues: async () => {
@@ -38,23 +35,7 @@ const useLogsStore = create<LogsStoreProps>()(
         toast.error(e?.response?.data?.message);
       }
     },
-    addIssue: async (body) => {
-      try {
-        const res = await axios.post(`${url}/employee`, body);
-        console.log("Add New Issue: ", res.data);
-      } catch (e: any) {
-        toast.error(e?.response?.data?.message);
-      }
-    },
-    addTechDetail: async (body) => {
-      try {
-        const res = await axios.get(`${url}/activ-issues`);
-        console.log("Add Technician's Changes: ", res.data);
-      } catch (e: any) {
-        toast.error(e?.response?.data?.message);
-      }
-    },
   }))
 );
 
-export { useLogsStore };
+export { useIssuesStore as useLogsStore };

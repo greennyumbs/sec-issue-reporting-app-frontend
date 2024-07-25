@@ -1,5 +1,5 @@
 "use client";
-import { WorkListDashboard } from "@/components/dashboard/workList";
+import { ActiveIssuesDashboard } from "@/components/dashboard/ActiveIssues";
 import React from "react";
 
 export default function WorkList() {
@@ -9,7 +9,7 @@ export default function WorkList() {
     //   role === UserRoles.PLANNER ||
     //   role === UserRoles.OPERATOR_MANAGER
     // ) {
-    return <WorkListDashboard />;
+    return <ActiveIssuesDashboard />;
     // }
     // return <>{displayDashBoard()}</>;
   };

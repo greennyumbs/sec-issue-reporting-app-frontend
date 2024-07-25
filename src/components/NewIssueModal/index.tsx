@@ -1,4 +1,4 @@
-import { Issue, useLogsStore } from "@/store/logsStore";
+import { Issue } from "@/store/IssuesStore";
 import React, { useState } from "react";
 import toast from "react-hot-toast";
 import {
@@ -13,6 +13,7 @@ import {
   SelectChangeEvent,
   TextField,
 } from "@mui/material";
+import { useActiveLogsStore as useActiveIssuesStore } from "@/store/ActiveIssuesStore";
 
 interface IssueFormProps {
   onClose: () => void;
@@ -32,7 +33,7 @@ export const NewIssueModal: React.FC<IssueFormProps> = ({ onClose }) => {
       address: "",
     },
   });
-  const { addIssue } = useLogsStore();
+  const { addIssue } = useActiveIssuesStore();
 
   const handleChange = (
     e:

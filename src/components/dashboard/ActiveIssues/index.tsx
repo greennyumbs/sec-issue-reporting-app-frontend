@@ -1,12 +1,12 @@
+import { ActiveIssueTable } from "@/components/ActiveIssueTable";
 import { ConfirmationModal } from "@/components/confirmationModal";
-import { IssueTable } from "@/components/IssueTable";
 import { Navbar } from "@/components/navbar";
 import { NewIssueModal } from "@/components/NewIssueModal";
-import { Issue, useLogsStore } from "@/store/logsStore";
+import { Issue } from "@/store/IssuesStore";
 import { Container, Box, Typography, Button } from "@mui/material";
 import { useState } from "react";
 
-export const WorkListDashboard: React.FC = () => {
+export const ActiveIssuesDashboard: React.FC = () => {
   const [isNewIssueModalOpen, setIsNewIssueModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
@@ -43,7 +43,7 @@ export const WorkListDashboard: React.FC = () => {
       <Container className="pt-[64px]">
         <Box className="flex justify-between items-center py-[15px]">
           <Typography variant="h4" component="h1">
-            Work List
+            Active Issues
           </Typography>
           <Button
             variant="contained"
@@ -53,7 +53,7 @@ export const WorkListDashboard: React.FC = () => {
             Add New Work Item
           </Button>
         </Box>
-        <IssueTable onConfirmDelete={handleConfirmDeleteClick} />
+        <ActiveIssueTable onConfirmDelete={handleConfirmDeleteClick} />
         {isNewIssueModalOpen && (
           <NewIssueModal onClose={() => setIsNewIssueModalOpen(false)} />
         )}

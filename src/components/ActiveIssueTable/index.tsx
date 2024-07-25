@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import { Issue, useLogsStore } from "@/store/IssuesStore";
 import {
   Table,
   TableBody,
@@ -8,27 +7,32 @@ import {
   TableHead,
   TableRow,
   Paper,
+  Button,
   Typography,
   Chip,
   Box,
 } from "@mui/material";
+import { useActiveLogsStore } from "@/store/ActiveIssuesStore";
+import { Issue } from "@/store/IssuesStore";
 
 interface WorkTableProps {
-  onEdit?: (Issue: Issue) => void;
+  onEdit?: (issue: Issue) => void;
+  onConfirmDelete?: (issue: Issue) => void;
 }
 
-export const IssueTable: React.FC<WorkTableProps> = () => {
+export const ActiveIssueTable: React.FC<WorkTableProps> = ({
+  onEdit,
+  onConfirmDelete,
+}) => {
   const formatTimestamp = (timestamp: string | undefined) => {
     return timestamp ? new Date(timestamp).toLocaleString() : "N/A";
   };
 
-  const { issues, fetchIssues } = useLogsStore();
+  const { activeIssues, fetchActiveIssues } = useActiveLogsStore();
 
   useEffect(() => {
-    if (issues.length === 0) fetchIssues();
-  }, [issues.length, fetchIssues]);
-
-  console.log(issues);
+    if (activeIssues.length === 0) fetchActiveIssues();
+  }, [activeIssues.length, fetchActiveIssues]);
 
   return (
     <Box className="overflow-scroll max-w-full mb-[15px]">
@@ -42,10 +46,11 @@ export const IssueTable: React.FC<WorkTableProps> = () => {
               <TableCell>Assignee</TableCell>
               <TableCell className="w-[150px] text-center">Status</TableCell>
               <TableCell className="w-[120px]">Updated At</TableCell>
+              <TableCell>Actions</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {issues.map((Issue) => (
+            {activeIssues.map((Issue) => (
               <TableRow key={Issue.issue_id}>
                 <TableCell>
                   <Typography variant="body2" color="textPrimary">
@@ -92,6 +97,27 @@ export const IssueTable: React.FC<WorkTableProps> = () => {
                   <Typography variant="body2" color="textSecondary">
                     {formatTimestamp(Issue.updated_at)}
                   </Typography>
+                </TableCell>
+                <TableCell align="right">
+                  {onEdit && (
+                    <Button
+                      onClick={() => onEdit(Issue)}
+                      color="primary"
+                      size="small"
+                      className="mr-2"
+                    >
+                      Edit
+                    </Button>
+                  )}
+                  {onConfirmDelete && (
+                    <Button
+                      onClick={() => onConfirmDelete(Issue)}
+                      color="secondary"
+                      size="small"
+                    >
+                      Delete
+                    </Button>
+                  )}
                 </TableCell>
               </TableRow>
             ))}
