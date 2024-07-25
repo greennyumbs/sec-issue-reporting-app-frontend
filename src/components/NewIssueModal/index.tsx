@@ -13,7 +13,7 @@ import {
   SelectChangeEvent,
   TextField,
 } from "@mui/material";
-import { useActiveLogsStore as useActiveIssuesStore } from "@/store/ActiveIssuesStore";
+import { useActiveIssuesStore } from "@/store/ActiveIssuesStore";
 
 interface IssueFormProps {
   onClose: () => void;

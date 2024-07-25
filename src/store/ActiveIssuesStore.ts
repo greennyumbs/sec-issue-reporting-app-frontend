@@ -34,7 +34,7 @@ const useActiveIssuesStore = create<ActiveLogsStoreProps>()(
     },
     addTechDetail: async (body) => {
       try {
-        const res = await axios.get(`${url}/activ-issues`);
+        const res = await axios.patch(`${url}/technician`, body);
         console.log("Add Technician's Changes: ", res.data);
       } catch (e: any) {
         toast.error(e?.response?.data?.message);
@@ -43,4 +43,4 @@ const useActiveIssuesStore = create<ActiveLogsStoreProps>()(
   }))
 );
 
-export { useActiveIssuesStore as useActiveLogsStore };
+export { useActiveIssuesStore };

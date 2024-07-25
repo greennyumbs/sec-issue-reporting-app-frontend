@@ -7,28 +7,18 @@ import {
   TableHead,
   TableRow,
   Paper,
-  Button,
   Typography,
   Chip,
   Box,
 } from "@mui/material";
-import { useActiveLogsStore } from "@/store/ActiveIssuesStore";
-import { Issue } from "@/store/IssuesStore";
+import { useActiveIssuesStore } from "@/store/ActiveIssuesStore";
 
-interface WorkTableProps {
-  onEdit?: (issue: Issue) => void;
-  onConfirmDelete?: (issue: Issue) => void;
-}
-
-export const ActiveIssueTable: React.FC<WorkTableProps> = ({
-  onEdit,
-  onConfirmDelete,
-}) => {
+export const ActiveIssuesTable: React.FC = () => {
   const formatTimestamp = (timestamp: string | undefined) => {
     return timestamp ? new Date(timestamp).toLocaleString() : "N/A";
   };
 
-  const { activeIssues, fetchActiveIssues } = useActiveLogsStore();
+  const { activeIssues, fetchActiveIssues } = useActiveIssuesStore();
 
   useEffect(() => {
     if (activeIssues.length === 0) fetchActiveIssues();
@@ -46,7 +36,6 @@ export const ActiveIssueTable: React.FC<WorkTableProps> = ({
               <TableCell>Assignee</TableCell>
               <TableCell className="w-[150px] text-center">Status</TableCell>
               <TableCell className="w-[120px]">Updated At</TableCell>
-              <TableCell>Actions</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -97,27 +86,6 @@ export const ActiveIssueTable: React.FC<WorkTableProps> = ({
                   <Typography variant="body2" color="textSecondary">
                     {formatTimestamp(Issue.updated_at)}
                   </Typography>
-                </TableCell>
-                <TableCell align="right">
-                  {onEdit && (
-                    <Button
-                      onClick={() => onEdit(Issue)}
-                      color="primary"
-                      size="small"
-                      className="mr-2"
-                    >
-                      Edit
-                    </Button>
-                  )}
-                  {onConfirmDelete && (
-                    <Button
-                      onClick={() => onConfirmDelete(Issue)}
-                      color="secondary"
-                      size="small"
-                    >
-                      Delete
-                    </Button>
-                  )}
                 </TableCell>
               </TableRow>
             ))}
