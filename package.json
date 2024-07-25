@@ -9,12 +9,19 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@emotion/react": "^11.13.0",
+    "@emotion/styled": "^11.13.0",
+    "@mui/material": "^5.16.4",
+    "@tanstack/react-query": "^5.51.11",
+    "axios": "^1.7.2",
     "dayjs": "^1.11.12",
     "next": "14.2.5",
     "react": "^18",
     "react-dom": "^18",
+    "react-hot-toast": "^2.4.1",
     "react-modal": "^3.16.1",
-    "swr": "^2.2.5"
+    "swr": "^2.2.5",
+    "zustand": "^4.5.4"
   },
   "devDependencies": {
     "@types/node": "^20",
