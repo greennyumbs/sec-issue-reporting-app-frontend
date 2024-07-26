@@ -18,6 +18,7 @@ import {
   useActiveIssuesStore,
 } from "@/store/ActiveIssuesStore";
 import { useTranslation } from "react-i18next";
+import StatusDropdown from "../statusChip";
 
 export const ActiveIssuesTable: React.FC = () => {
   const formatTimestamp = (timestamp: string | undefined) => {
