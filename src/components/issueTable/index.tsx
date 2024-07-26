@@ -13,6 +13,7 @@ import {
   Box,
 } from "@mui/material";
 import { useTranslation } from "react-i18next";
+import { StatusChip } from "../statusChip";
 
 interface WorkTableProps {
   onEdit?: (Issue: Issue) => void;
@@ -30,11 +31,18 @@ export const IssueTable: React.FC<WorkTableProps> = () => {
     if (issues.length === 0) fetchIssues();
   }, [issues.length, fetchIssues]);
 
-  console.log(issues);
-
   return (
-    <Box className="overflow-scroll max-w-full mb-[15px]">
-      <TableContainer component={Paper}>
+    <Box className="overflow-scroll max-w-full pb-[15px]">
+      <TableContainer
+        component={Paper}
+        elevation={0}
+        sx={{
+          borderRadius: 2,
+          overflow: "hidden",
+          border: "1px solid",
+          borderColor: "divider",
+        }}
+      >
         <Table>
           <TableHead>
             <TableRow>
@@ -75,21 +83,10 @@ export const IssueTable: React.FC<WorkTableProps> = () => {
                   </Typography>
                 </TableCell>
                 <TableCell>
-                  <Chip
-                    label={Issue.status}
-                    color={
-                      Issue.status === "PENDING"
-                        ? "warning"
-                        : Issue.status === "IN PROGRESS"
-                        ? "primary"
-                        : Issue.status === "COMPLETED"
-                        ? "success"
-                        : Issue.status === "CANCELED"
-                        ? "error"
-                        : "default"
-                    }
-                    variant="outlined"
-                    className="w-[120px]"
+                  <StatusChip
+                    issueId={Issue.issue_id}
+                    status={Issue.status}
+                    techDetail={Issue.tech_detail || ""}
                   />
                 </TableCell>
                 <TableCell>

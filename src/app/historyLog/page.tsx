@@ -1,5 +1,5 @@
 "use client"; // Enable client components for SWR
-import { HistoryLogDashboard } from "@/components/dashboard/historyLog";
+import { HistoryLogDashboard } from "@/components/pages/historyLog";
 export default function HistoryLog() {
   const displayDashBoard = () => {
     // if (
