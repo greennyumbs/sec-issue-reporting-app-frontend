@@ -10,7 +10,7 @@ export const IssueTable: React.FC<WorkTableProps> = () => {
   const { issues, fetchIssues } = useLogsStore();
 
   useEffect(() => {
-    if (issues.length === 0) fetchIssues();
+    fetchIssues();
   }, [issues.length, fetchIssues]);
 
   return <CustomTable data={issues} />;

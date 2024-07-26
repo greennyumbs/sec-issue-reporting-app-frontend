@@ -25,13 +25,13 @@ export const StatusChip: React.FC<StatusChipProps> = ({
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
   const handleStatusChange = (
-    issueId: number,
-    newStatus: string,
+    e: React.MouseEvent<HTMLElement>,
     newTechDetail: string
   ) => {
+    const newStatus = (e.target as HTMLElement).getAttribute("value");
     const body = {
       id: issueId,
-      status: newStatus,
+      status: newStatus || "",
       techDetail: newTechDetail,
     };
     addTechDetail(body);
@@ -48,6 +48,8 @@ export const StatusChip: React.FC<StatusChipProps> = ({
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  const statuses = ["PENDING", "IN_PROGRESS", "COMPLETED", "CANCELED"];
 
   return (
     <Box>
@@ -66,26 +68,15 @@ export const StatusChip: React.FC<StatusChipProps> = ({
         className="w-[140px]"
       />
       <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleClose}>
-        <MenuItem
-          onClick={() => handleStatusChange(issueId, "PENDING", techDetail)}
-        >
-          {t("pending")}
-        </MenuItem>
-        <MenuItem
-          onClick={() => handleStatusChange(issueId, "IN_PROGRESS", techDetail)}
-        >
-          {t("in_progress")}
-        </MenuItem>
-        <MenuItem
-          onClick={() => handleStatusChange(issueId, "COMPLETED", techDetail)}
-        >
-          {t("completed")}
-        </MenuItem>
-        <MenuItem
-          onClick={() => handleStatusChange(issueId, "CANCELED", techDetail)}
-        >
-          {t("canceled")}
-        </MenuItem>
+        {statuses.map((status) => (
+          <MenuItem
+            key={status}
+            value={status}
+            onClick={(e) => handleStatusChange(e, techDetail)}
+          >
+            {t(status.toLowerCase())}
+          </MenuItem>
+        ))}
       </Menu>
     </Box>
   );

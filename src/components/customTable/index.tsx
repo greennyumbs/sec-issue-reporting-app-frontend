@@ -12,6 +12,7 @@ import {
 import { t } from "i18next";
 import StatusChip from "../statusChip";
 import { Issue } from "@/store/IssuesStore";
+import AssigneeChip from "../assigneeChip";
 
 interface CustomTableProps {
   data: Issue[];
@@ -73,9 +74,12 @@ export const CustomTable: React.FC<CustomTableProps> = ({
                   </Typography>
                 </TableCell>
                 <TableCell>
-                  <Typography variant="body2" color="textSecondary">
-                    {Issue.technician_id || t("unassigned")}
-                  </Typography>
+                  <AssigneeChip
+                    issueId={Issue.issue_id}
+                    technicianId={Issue.technician_id || -1}
+                    technicianName="Waiting for fetchTechnicians"
+                    clickable={assigneeClickable}
+                  />
                 </TableCell>
                 <TableCell>
                   <StatusChip
