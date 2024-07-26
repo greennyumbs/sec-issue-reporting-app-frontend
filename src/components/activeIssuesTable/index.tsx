@@ -1,17 +1,5 @@
 import React, { useEffect } from "react";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Paper,
-  Typography,
-  Box,
-} from "@mui/material";
 import { useActiveIssuesStore } from "@/store/ActiveIssuesStore";
-import { StatusChip } from "../statusChip";
 import { useTranslation } from "react-i18next";
 import { CustomTable } from "../customTable";
 
