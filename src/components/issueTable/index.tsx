@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import { Issue, useLogsStore } from "@/store/IssuesStore";
-import { useTranslation } from "react-i18next";
 import { CustomTable } from "../customTable";
 
 interface WorkTableProps {
@@ -8,11 +7,6 @@ interface WorkTableProps {
 }
 
 export const IssueTable: React.FC<WorkTableProps> = () => {
-  const formatTimestamp = (timestamp: string | undefined) => {
-    return timestamp ? new Date(timestamp).toLocaleString() : "N/A";
-  };
-
-  const { t } = useTranslation();
   const { issues, fetchIssues } = useLogsStore();
 
   useEffect(() => {
