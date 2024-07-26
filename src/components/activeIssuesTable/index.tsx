@@ -8,15 +8,10 @@ import {
   TableRow,
   Paper,
   Typography,
-  Chip,
   Box,
-  Select,
-  MenuItem,
 } from "@mui/material";
-import {
-  TechDetailProps,
-  useActiveIssuesStore,
-} from "@/store/ActiveIssuesStore";
+import { useActiveIssuesStore } from "@/store/ActiveIssuesStore";
+import { StatusChip } from "../statusChip";
 import { useTranslation } from "react-i18next";
 
 export const ActiveIssuesTable: React.FC = () => {
@@ -32,8 +27,17 @@ export const ActiveIssuesTable: React.FC = () => {
   }, [activeIssues.length, activeIssues]);
 
   return (
-    <Box className="overflow-scroll max-w-full mb-[15px]">
-      <TableContainer component={Paper}>
+    <Box className="overflow-scroll max-w-full pb-[15px]">
+      <TableContainer
+        component={Paper}
+        elevation={0}
+        sx={{
+          borderRadius: 2,
+          overflow: "hidden",
+          border: "1px solid",
+          borderColor: "divider",
+        }}
+      >
         <Table>
           <TableHead>
             <TableRow>
@@ -70,14 +74,15 @@ export const ActiveIssuesTable: React.FC = () => {
                 </TableCell>
                 <TableCell>
                   <Typography variant="body2" color="textSecondary">
-                    {Issue.technician_id || "Unassigned"}
+                    {Issue.technician_id || t("unassigned")}
                   </Typography>
                 </TableCell>
                 <TableCell>
-                  <StatusDropdown
+                  <StatusChip
                     issueId={Issue.issue_id}
                     status={Issue.status}
                     techDetail={Issue.tech_detail || ""}
+                    clickable
                   />
                 </TableCell>
                 <TableCell>
