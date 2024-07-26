@@ -7,32 +7,28 @@ import {
   TableHead,
   TableRow,
   Paper,
-  Button,
   Typography,
   Chip,
   Box,
+  Select,
+  MenuItem,
 } from "@mui/material";
-import { useActiveLogsStore } from "@/store/ActiveIssuesStore";
-import { Issue } from "@/store/IssuesStore";
+import {
+  TechDetailProps,
+  useActiveIssuesStore,
+} from "@/store/ActiveIssuesStore";
+import { StatusDropdown } from "./SelectDropdown";
 
-interface WorkTableProps {
-  onEdit?: (issue: Issue) => void;
-  onConfirmDelete?: (issue: Issue) => void;
-}
-
-export const ActiveIssueTable: React.FC<WorkTableProps> = ({
-  onEdit,
-  onConfirmDelete,
-}) => {
+export const ActiveIssuesTable: React.FC = () => {
   const formatTimestamp = (timestamp: string | undefined) => {
     return timestamp ? new Date(timestamp).toLocaleString() : "N/A";
   };
 
-  const { activeIssues, fetchActiveIssues } = useActiveLogsStore();
+  const { activeIssues, fetchActiveIssues } = useActiveIssuesStore();
 
   useEffect(() => {
-    if (activeIssues.length === 0) fetchActiveIssues();
-  }, [activeIssues.length, fetchActiveIssues]);
+    fetchActiveIssues();
+  }, [activeIssues.length, activeIssues]);
 
   return (
     <Box className="overflow-scroll max-w-full mb-[15px]">
@@ -44,9 +40,8 @@ export const ActiveIssueTable: React.FC<WorkTableProps> = ({
               <TableCell className="w-[300px]">Issue Details</TableCell>
               <TableCell className="w-[300px]">Fix Details</TableCell>
               <TableCell>Assignee</TableCell>
-              <TableCell className="w-[150px] text-center">Status</TableCell>
+              <TableCell className="w-[200px] text-center">Status</TableCell>
               <TableCell className="w-[120px]">Updated At</TableCell>
-              <TableCell>Actions</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -76,48 +71,16 @@ export const ActiveIssueTable: React.FC<WorkTableProps> = ({
                   </Typography>
                 </TableCell>
                 <TableCell>
-                  <Chip
-                    label={Issue.status}
-                    color={
-                      Issue.status === "PENDING"
-                        ? "warning"
-                        : Issue.status === "IN PROGRESS"
-                        ? "primary"
-                        : Issue.status === "COMPLETED"
-                        ? "success"
-                        : Issue.status === "CANCELED"
-                        ? "error"
-                        : "default"
-                    }
-                    variant="outlined"
-                    className="w-[120px]"
+                  <StatusDropdown
+                    issueId={Issue.issue_id}
+                    status={Issue.status}
+                    techDetail={Issue.tech_detail || ""}
                   />
                 </TableCell>
                 <TableCell>
                   <Typography variant="body2" color="textSecondary">
                     {formatTimestamp(Issue.updated_at)}
                   </Typography>
-                </TableCell>
-                <TableCell align="right">
-                  {onEdit && (
-                    <Button
-                      onClick={() => onEdit(Issue)}
-                      color="primary"
-                      size="small"
-                      className="mr-2"
-                    >
-                      Edit
-                    </Button>
-                  )}
-                  {onConfirmDelete && (
-                    <Button
-                      onClick={() => onConfirmDelete(Issue)}
-                      color="secondary"
-                      size="small"
-                    >
-                      Delete
-                    </Button>
-                  )}
                 </TableCell>
               </TableRow>
             ))}
