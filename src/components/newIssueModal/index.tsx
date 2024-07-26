@@ -11,6 +11,7 @@ import {
   TextField,
 } from "@mui/material";
 import { useActiveIssuesStore } from "@/store/ActiveIssuesStore";
+import { useTranslation } from "react-i18next";
 
 interface IssueFormProps {
   onClose: () => void;
@@ -31,6 +32,7 @@ export const NewIssueModal: React.FC<IssueFormProps> = ({ onClose }) => {
     },
   });
   const { addIssue } = useActiveIssuesStore();
+  const { t } = useTranslation();
 
   const handleChange = (
     e:
@@ -56,7 +58,7 @@ export const NewIssueModal: React.FC<IssueFormProps> = ({ onClose }) => {
 
   return (
     <Dialog open onClose={onClose}>
-      <DialogTitle>Add New Work Item</DialogTitle>
+      <DialogTitle>{t("add_new_item")}</DialogTitle>
       <DialogContent>
         <Box component="form" noValidate autoComplete="off">
           <TextField
@@ -99,10 +101,10 @@ export const NewIssueModal: React.FC<IssueFormProps> = ({ onClose }) => {
       </DialogContent>
       <DialogActions>
         <Button onClick={onClose} color="secondary">
-          Cancel
+          {t("cancel")}
         </Button>
         <Button onClick={handleSave} color="primary">
-          Save
+          {t("save")}
         </Button>
       </DialogActions>
     </Dialog>
