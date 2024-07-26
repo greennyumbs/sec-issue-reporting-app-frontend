@@ -1,5 +1,5 @@
 "use client";
-import { ActiveIssuesDashboard } from "@/components/dashboard/ActiveIssues";
+import { ActiveIssuesDashboard } from "@/components/pages/ActiveIssues";
 import React from "react";
 
 export default function WorkList() {

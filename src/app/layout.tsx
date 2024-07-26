@@ -3,7 +3,7 @@ import "./globals.css";
 import { Toaster } from "react-hot-toast";
 import { I18nProvider } from "./i18n-client";
 import { CssBaseline, ThemeProvider } from "@mui/material";
-import { darkTheme } from "./theme";
+import { lightTheme } from "./theme"; // Ensure the correct import
 const inter = Inter({ subsets: ["latin"] });
 
 export default function RootLayout({
@@ -13,14 +13,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>
-        <I18nProvider>
-          <ThemeProvider theme={darkTheme}>
-            <CssBaseline />
+      <body className={`${inter.className} min-h-screen`}>
+        <ThemeProvider theme={lightTheme}>
+          <CssBaseline />
+          <I18nProvider>
             {children}
             <Toaster />
-          </ThemeProvider>
-        </I18nProvider>
+          </I18nProvider>
+        </ThemeProvider>
       </body>
     </html>
   );
