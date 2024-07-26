@@ -21,7 +21,7 @@ const LoginPage: React.FC = () => {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault(); // Prevent default form submission behavior
     setError(""); // Clear any previous errors
-    router.push("/workList");
+    router.push("/activeIssues");
   };
 
   return (
