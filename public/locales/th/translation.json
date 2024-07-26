@@ -1,0 +1,19 @@
+{
+  "pending": "รอรับเรื่อง",
+  "in_progress": "กำลังดำเนินการ",
+  "completed": "เสร็จสิ้น",
+  "canceled": "ยกเลิก",
+  "active_issues": "งานตอนนี้",
+  "add_new_issue": "เพิ่มงานใหม่",
+  "cancel": "ยกเลิก",
+  "save": "บันทึก",
+  "history_logs": "ประวัติงาน",
+  "logout": "ออกจากระบบ",
+  "machine": "เครื่องจักร",
+  "issue_detail": "รายละเอียดปัญหา",
+  "fix_detail": "รายละเอียดการซ่อม",
+  "assignee": "ผู้รับเรื่อง",
+  "status": "สถานะ",
+  "updated_at": "อัพเดท",
+  "unassigned": "ยังไม่มีผู้รับร้อง"
+}

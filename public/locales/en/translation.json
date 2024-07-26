@@ -1,0 +1,19 @@
+{
+  "pending": "Pending",
+  "in_progress": "In Progress",
+  "completed": "Completed",
+  "canceled": "Canceled",
+  "active_issues": "Active Issues",
+  "add_new_issue": "Add New Issue",
+  "cancel": "Cancel",
+  "save": "Save",
+  "history_logs": "History Logs",
+  "logout": "Logout",
+  "machine": "Machine",
+  "issue_detail": "Issue Detail",
+  "fix_detail": "Fix Detail",
+  "assignee": "Assignee",
+  "status": "Status",
+  "updated_at": "Updated At",
+  "unassigned": "Unassigned"
+}

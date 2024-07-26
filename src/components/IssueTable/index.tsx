@@ -12,6 +12,7 @@ import {
   Chip,
   Box,
 } from "@mui/material";
+import { useTranslation } from "react-i18next";
 
 interface WorkTableProps {
   onEdit?: (Issue: Issue) => void;
@@ -22,6 +23,7 @@ export const IssueTable: React.FC<WorkTableProps> = () => {
     return timestamp ? new Date(timestamp).toLocaleString() : "N/A";
   };
 
+  const { t } = useTranslation();
   const { issues, fetchIssues } = useLogsStore();
 
   useEffect(() => {
@@ -36,12 +38,14 @@ export const IssueTable: React.FC<WorkTableProps> = () => {
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell className="w-[150px]">Machine</TableCell>
-              <TableCell className="w-[300px]">Issue Details</TableCell>
-              <TableCell className="w-[300px]">Fix Details</TableCell>
-              <TableCell>Assignee</TableCell>
-              <TableCell className="w-[150px] text-center">Status</TableCell>
-              <TableCell className="w-[120px]">Updated At</TableCell>
+              <TableCell className="w-[150px]">{t("machine")}</TableCell>
+              <TableCell className="w-[300px]">{t("issue_detail")}</TableCell>
+              <TableCell className="w-[300px]">{t("fix_detail")}</TableCell>
+              <TableCell>{t("assignee")}</TableCell>
+              <TableCell className="w-[150px] text-center">
+                {t("status")}
+              </TableCell>
+              <TableCell className="w-[120px]">{t("updated_at")}</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -67,7 +71,7 @@ export const IssueTable: React.FC<WorkTableProps> = () => {
                 </TableCell>
                 <TableCell>
                   <Typography variant="body2" color="textSecondary">
-                    {Issue.technician_id || "Unassigned"}
+                    {Issue.technician_id || t("unassigned")}
                   </Typography>
                 </TableCell>
                 <TableCell>

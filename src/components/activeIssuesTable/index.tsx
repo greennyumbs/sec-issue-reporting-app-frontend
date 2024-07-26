@@ -17,7 +17,8 @@ import {
   TechDetailProps,
   useActiveIssuesStore,
 } from "@/store/ActiveIssuesStore";
-import { StatusDropdown } from "./SelectDropdown";
+import { useTranslation } from "react-i18next";
+import StatusDropdown from "../statusChip";
 
 export const ActiveIssuesTable: React.FC = () => {
   const formatTimestamp = (timestamp: string | undefined) => {
@@ -25,6 +26,7 @@ export const ActiveIssuesTable: React.FC = () => {
   };
 
   const { activeIssues, fetchActiveIssues } = useActiveIssuesStore();
+  const { t } = useTranslation();
 
   useEffect(() => {
     fetchActiveIssues();
@@ -36,12 +38,14 @@ export const ActiveIssuesTable: React.FC = () => {
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell className="w-[150px]">Machine</TableCell>
-              <TableCell className="w-[300px]">Issue Details</TableCell>
-              <TableCell className="w-[300px]">Fix Details</TableCell>
-              <TableCell>Assignee</TableCell>
-              <TableCell className="w-[200px] text-center">Status</TableCell>
-              <TableCell className="w-[120px]">Updated At</TableCell>
+              <TableCell className="w-[150px]">{t("machine")}</TableCell>
+              <TableCell className="w-[300px]">{t("issue_detail")}</TableCell>
+              <TableCell className="w-[300px]">{t("fix_detail")}</TableCell>
+              <TableCell>{t("assignee")}</TableCell>
+              <TableCell className="w-[150px] text-center">
+                {t("status")}
+              </TableCell>
+              <TableCell className="w-[120px]">{t("updated_at")}</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
