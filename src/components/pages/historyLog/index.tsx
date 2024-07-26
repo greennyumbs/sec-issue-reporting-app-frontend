@@ -1,6 +1,6 @@
 import { Navbar } from "@/components/navbar";
 import { IssueTable } from "@/components/issueTable";
-import { Container } from "@mui/material";
+import { Box, Container, Typography } from "@mui/material";
 import { useTranslation } from "react-i18next";
 
 export const HistoryLogDashboard: React.FC = () => {
@@ -9,7 +9,11 @@ export const HistoryLogDashboard: React.FC = () => {
     <>
       <Navbar />
       <Container className="pt-[64px]">
-        <h1 className="text-2xl font-bold py-[15px]">{t("history_logs")}</h1>
+        <Box className="flex justify-between items-center py-[15px]">
+          <Typography variant="h4" component="h1">
+            {t("history_logs")}
+          </Typography>
+        </Box>
         <IssueTable />
       </Container>
     </>
