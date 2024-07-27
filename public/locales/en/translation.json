@@ -2,7 +2,7 @@
   "pending": "Pending",
   "in_progress": "In Progress",
   "completed": "Completed",
-  "canceled": "Canceled",
+  "canceled": "Cancelled",
   "active_issues": "Active Issues",
   "add_new_issue": "Add New Issue",
   "cancel": "Cancel",
