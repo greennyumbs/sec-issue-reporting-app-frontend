@@ -61,7 +61,7 @@ export const LoginDashboard: React.FC = () => {
               fullWidth
               variant="contained"
               color="primary"
-              onClick={() => handleRoleClick("Employee")}
+              onClick={() => handleRoleClick("EMPLOYEE")}
             >
               {t("employee")}
             </Button>
@@ -69,7 +69,7 @@ export const LoginDashboard: React.FC = () => {
               fullWidth
               variant="contained"
               color="secondary"
-              onClick={() => handleRoleClick("Technician")}
+              onClick={() => handleRoleClick("TECHNICIAN")}
             >
               {t("technician")}
             </Button>
