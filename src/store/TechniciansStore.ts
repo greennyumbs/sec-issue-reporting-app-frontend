@@ -26,17 +26,18 @@ const useTechniciansStore = create<IssuesStoreProps>()(
     technicians: [],
     fetchTechnicians: async () => {
       try {
-        // const res = await axios.get(`${url}/logs`);
-        const res = {
-          data: [
-            { technicianId: 1, technicianName: "โยฮัน ลีเบิท" },
-            { technicianId: 2, technicianName: "อุจิฮะ ซาซูเกะ" },
-            { technicianId: 3, technicianName: "คิม มินจี" },
-          ],
-        };
-        set({ technicians: res.data });
-      } catch (e: any) {
-        toast.error(e?.response?.data?.message);
+        const res = await axios.get(`${url}/technician`);
+    
+        const transformedData = res.data.map((item: { technician_id: number; tech_name: string; }) => {
+          return {
+            technicianId: item.technician_id,
+            technicianName: item.tech_name 
+          };
+        });
+    
+        set({ technicians: transformedData });
+      } catch (e) {
+        toast.error("Error fetching technicians");
       }
     },
     assignTechnician: async (body) => {
