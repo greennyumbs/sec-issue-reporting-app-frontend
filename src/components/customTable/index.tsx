@@ -45,15 +45,17 @@ export const CustomTable: React.FC<CustomTableProps> = ({
           <TableHead>
             <TableRow>
               <TableCell className="w-[150px]">{t("machine")}</TableCell>
-              <TableCell className="w-[300px]">{t("issue_detail")}</TableCell>
-              <TableCell className="w-[300px]">{t("fix_detail")}</TableCell>
+              <TableCell className="min-w-[300px]">
+                {t("issue_detail")}
+              </TableCell>
+              <TableCell className="min-w-[300px]">{t("fix_detail")}</TableCell>
               <TableCell className="w-[150px]">{t("assignee")}</TableCell>
               <TableCell className="w-[150px]">{t("status")}</TableCell>
               <TableCell className="w-[120px]">{t("updated_at")}</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {data.map((Issue) => (
+            {data?.map((Issue) => (
               <TableRow key={Issue.issue_id}>
                 <TableCell>
                   <Typography variant="body2" color="textPrimary">
