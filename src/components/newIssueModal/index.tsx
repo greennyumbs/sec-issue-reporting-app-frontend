@@ -1,5 +1,5 @@
 import { Issue } from "@/store/IssuesStore";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import toast from "react-hot-toast";
 import {
   Box,
@@ -9,9 +9,20 @@ import {
   DialogContent,
   DialogTitle,
   TextField,
+  Select,
+  MenuItem,
+  FormControl,
+  InputLabel,
+  CircularProgress,
 } from "@mui/material";
 import { useActiveIssuesStore } from "@/store/ActiveIssuesStore";
 import { useTranslation } from "react-i18next";
+import axios from "axios";
+
+interface Machine {
+  id: string;
+  name: string;
+}
 
 interface IssueFormProps {
   onClose: () => void;
@@ -31,8 +42,27 @@ export const NewIssueModal: React.FC<IssueFormProps> = ({ onClose }) => {
       address: "",
     },
   });
+
+  const [machines, setMachines] = useState<Machine[]>([]);
+  const [loading, setLoading] = useState(true);
   const { addIssue } = useActiveIssuesStore();
   const { t } = useTranslation();
+
+  useEffect(() => {
+    const fetchMachines = async () => {
+      try {
+        const response = await axios.get("http://localhost/machine");
+        console.log(response.data.data); // Debug: log response data
+        setMachines(response.data.data);
+      } catch (error) {
+        toast.error(`Error fetching machines: ${error.message}`);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchMachines();
+  }, []);
 
   const handleChange = (
     e:
@@ -44,6 +74,18 @@ export const NewIssueModal: React.FC<IssueFormProps> = ({ onClose }) => {
     setIssue((prevIssue) => ({
       ...prevIssue,
       [name as string]: value,
+    }));
+  };
+
+  const handleSelectChange = (e: React.ChangeEvent<{ value: unknown }>) => {
+    const selectedMachine = machines.find((machine) => machine.id === e.target.value);
+    setIssue((prevIssue) => ({
+      ...prevIssue,
+      machine_id: selectedMachine ? selectedMachine.id : "",
+      machine_part: {
+        ...prevIssue.machine_part,
+        name: selectedMachine ? selectedMachine.name : "",
+      },
     }));
   };
 
@@ -60,44 +102,37 @@ export const NewIssueModal: React.FC<IssueFormProps> = ({ onClose }) => {
     <Dialog open onClose={onClose}>
       <DialogTitle>{t("add_new_item")}</DialogTitle>
       <DialogContent>
-        <Box component="form" noValidate autoComplete="off">
-          <TextField
-            type="text"
-            name="machine_id"
-            label="Machine ID"
-            value={issue.machine_id}
-            onChange={handleChange}
-            fullWidth
-            margin="normal"
-          />
-          <TextField
-            type="text"
-            name="machine_part.name"
-            label="Machine Name"
-            value={issue.machine_part.name}
-            onChange={(e) =>
-              setIssue((prevIssue) => ({
-                ...prevIssue,
-                machine_part: {
-                  ...prevIssue.machine_part,
-                  name: e.target.value,
-                },
-              }))
-            }
-            fullWidth
-            margin="normal"
-          />
-          <TextField
-            name="issue_detail"
-            label="Issue Detail Description"
-            value={issue.issue_detail}
-            onChange={handleChange}
-            fullWidth
-            margin="normal"
-            multiline
-            rows={4}
-          />
-        </Box>
+        {loading ? (
+          <CircularProgress />
+        ) : (
+          <Box component="form" noValidate autoComplete="off">
+            <FormControl fullWidth margin="normal">
+              <InputLabel>{t("Machine Name")}</InputLabel>
+              <Select
+                value={issue.machine_id}
+                onChange={handleSelectChange}
+                fullWidth
+                label={t("Machine Name")}
+              >
+                {machines.map((machine) => (
+                  <MenuItem key={machine.id} value={machine.id}>
+                    {machine.name}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+            <TextField
+              name="issue_detail"
+              label="Issue Detail Description"
+              value={issue.issue_detail}
+              onChange={handleChange}
+              fullWidth
+              margin="normal"
+              multiline
+              rows={4}
+            />
+          </Box>
+        )}
       </DialogContent>
       <DialogActions>
         <Button onClick={onClose} color="secondary">

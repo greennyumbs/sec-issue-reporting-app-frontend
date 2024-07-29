@@ -55,7 +55,7 @@ export const AssigneeChip: React.FC<AssigneeChipProps> = ({
         }
         label={
           <span>
-            {technicianId}
+            {technicianName}
             {clickable &&
               (anchorEl ? <ArrowDropUpIcon /> : <ArrowDropDownIcon />)}
           </span>
