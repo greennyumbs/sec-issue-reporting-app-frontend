@@ -8,6 +8,7 @@ import {
   useActiveIssuesStore,
 } from "@/store/ActiveIssuesStore";
 import { getStatusColor } from "./utils";
+import { useUserStore } from "@/store/UserStore";
 
 interface StatusChipProps extends TechDetailProps {
   clickable?: boolean;
@@ -21,6 +22,7 @@ export const StatusChip: React.FC<StatusChipProps> = ({
 }) => {
   const { addTechDetail, fetchActiveIssues } = useActiveIssuesStore();
   const { t } = useTranslation();
+  const { user } = useUserStore();
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
@@ -49,7 +51,8 @@ export const StatusChip: React.FC<StatusChipProps> = ({
     setAnchorEl(null);
   };
 
-  const statuses = ["PENDING", "IN_PROGRESS", "COMPLETED", "CANCELED"];
+  const employeeStatus = ["PENDING", "CANCELED"];
+  const technicianStatus = ["IN_PROGRESS", "COMPLETED", "CANCELED"];
 
   return (
     <Box>
@@ -68,15 +71,25 @@ export const StatusChip: React.FC<StatusChipProps> = ({
         className="w-[140px]"
       />
       <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleClose}>
-        {statuses.map((status) => (
-          <MenuItem
-            key={status}
-            value={status}
-            onClick={(e) => handleStatusChange(e, techDetail)}
-          >
-            {t(status.toLowerCase())}
-          </MenuItem>
-        ))}
+        {user.role === "EMPLOYEE"
+          ? employeeStatus.map((status) => (
+              <MenuItem
+                key={status}
+                value={status}
+                onClick={(e) => handleStatusChange(e, techDetail)}
+              >
+                {t(status.toLowerCase())}
+              </MenuItem>
+            ))
+          : technicianStatus.map((status) => (
+              <MenuItem
+                key={status}
+                value={status}
+                onClick={(e) => handleStatusChange(e, techDetail)}
+              >
+                {t(status.toLowerCase())}
+              </MenuItem>
+            ))}
       </Menu>
     </Box>
   );
