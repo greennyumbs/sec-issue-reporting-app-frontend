@@ -15,8 +15,6 @@ export const ActiveIssuesTable: React.FC = () => {
     fetchTechnicians();
   }, []);
 
-  console.log(user.role);
-
   return (
     <CustomTable
       data={activeIssues}
