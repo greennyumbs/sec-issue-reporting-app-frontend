@@ -15,5 +15,8 @@
   "assignee": "Assignee",
   "status": "Status",
   "updated_at": "Updated At",
-  "unassigned": "Unassigned"
+  "unassigned": "Unassigned",
+  "select_role": "Select your role",
+  "employee": "Employee",
+  "technician": "Technician"
 }

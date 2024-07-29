@@ -15,5 +15,8 @@
   "assignee": "ผู้รับเรื่อง",
   "status": "สถานะ",
   "updated_at": "อัพเดท",
-  "unassigned": "ยังไม่มีผู้รับร้อง"
+  "unassigned": "ยังไม่มีผู้รับร้อง",
+  "select_role": "เลือกตำแหน่งของคุณ",
+  "employee": "พนักงาน",
+  "technician": "ช่างเทคนิค"
 }
