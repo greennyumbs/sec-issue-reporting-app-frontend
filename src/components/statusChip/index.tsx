@@ -26,7 +26,7 @@ export const StatusChip: React.FC<StatusChipProps> = ({
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
-  const handleStatusChange = (
+  const handleStatusChange = async (
     e: React.MouseEvent<HTMLElement>,
     newTechDetail: string
   ) => {
@@ -36,7 +36,7 @@ export const StatusChip: React.FC<StatusChipProps> = ({
       status: newStatus || "",
       techDetail: newTechDetail,
     };
-    addTechDetail(body);
+    await addTechDetail(body);
     fetchActiveIssues();
     setAnchorEl(null);
   };
