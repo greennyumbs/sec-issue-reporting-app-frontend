@@ -77,7 +77,7 @@ export const CustomTable: React.FC<CustomTableProps> = ({
                   <AssigneeChip
                     issueId={Issue.issue_id}
                     technicianId={Issue.technician_id || -1}
-                    technicianName="Waiting for fetchTechnicians"
+                    technicianName={Issue.technician?.tech_name || "Not Assigned"}
                     clickable={assigneeClickable}
                   />
                 </TableCell>

@@ -11,7 +11,7 @@ export const ActiveIssuesTable: React.FC = () => {
   useEffect(() => {
     fetchActiveIssues();
     fetchTechnicians();
-  }, [activeIssues.length, activeIssues]);
+  }, []);
 
   return <CustomTable data={activeIssues} statusClickable assigneeClickable />;
 };

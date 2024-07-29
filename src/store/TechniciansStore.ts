@@ -27,14 +27,14 @@ const useTechniciansStore = create<IssuesStoreProps>()(
     fetchTechnicians: async () => {
       try {
         const res = await axios.get(`${url}/technician`);
-    
+
         const transformedData = res.data.map((item: { technician_id: number; tech_name: string; }) => {
           return {
             technicianId: item.technician_id,
             technicianName: item.tech_name 
           };
         });
-    
+
         set({ technicians: transformedData });
       } catch (e) {
         toast.error("Error fetching technicians");

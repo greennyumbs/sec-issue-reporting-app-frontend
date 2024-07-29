@@ -9,6 +9,7 @@ export type Issue = {
   issue_detail: string;
   tech_detail: string | null;
   technician_id: number | null;
+  technician: Technician;
   status: string;
   updated_at: string;
   machine_part: {
@@ -16,6 +17,10 @@ export type Issue = {
     address: string;
   };
 };
+
+type Technician = {
+  tech_name: string | null;
+}
 
 interface IssuesStoreProps {
   issues: Issue[];
