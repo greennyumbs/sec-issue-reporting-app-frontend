@@ -13,6 +13,7 @@ import { t } from "i18next";
 import StatusChip from "../statusChip";
 import { Issue } from "@/store/IssuesStore";
 import AssigneeChip from "../assigneeChip";
+import { FixDetailBox } from "../fixDetailBox";
 
 interface CustomTableProps {
   data: Issue[];
@@ -48,10 +49,18 @@ export const CustomTable: React.FC<CustomTableProps> = ({
               <TableCell className="min-w-[250px]">
                 {t("issue_detail")}
               </TableCell>
-              <TableCell className="min-w-[250px]">{t("fix_detail")}</TableCell>
-              <TableCell className="w-[250px]">{t("assignee")}</TableCell>
-              <TableCell className="w-[150px]">{t("status")}</TableCell>
-              <TableCell className="w-[120px]">{t("updated_at")}</TableCell>
+              <TableCell className="w-[250px]" sx={{ textAlign: "center" }}>
+                {t("assignee")}
+              </TableCell>
+              <TableCell className="min-w-[250px]" sx={{ textAlign: "center" }}>
+                {t("fix_detail")}
+              </TableCell>
+              <TableCell className="w-[150px]" sx={{ textAlign: "center" }}>
+                {t("status")}
+              </TableCell>
+              <TableCell className="w-[120px]" sx={{ textAlign: "center" }}>
+                {t("updated_at")}
+              </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -66,19 +75,29 @@ export const CustomTable: React.FC<CustomTableProps> = ({
                   </Typography>
                 </TableCell>
                 <TableCell>
-                  <Typography variant="body2" color="textSecondary">
+                  <Typography
+                    variant="body2"
+                    color="textSecondary"
+                    sx={{
+                      whiteSpace: "pre-wrap",
+                      wordWrap: "break-word",
+                      maxWidth: "218px",
+                    }}
+                  >
                     {Issue.issue_detail || "-"}
-                  </Typography>
-                </TableCell>
-                <TableCell>
-                  <Typography variant="body2" color="textSecondary">
-                    {Issue.tech_detail || "-"}
                   </Typography>
                 </TableCell>
                 <TableCell>
                   <AssigneeChip
                     issueId={Issue.issue_id}
                     technicianId={Issue.technician_id}
+                    clickable={assigneeClickable}
+                  />
+                </TableCell>
+                <TableCell>
+                  <FixDetailBox
+                    issueId={Issue.issue_id}
+                    techDetail={Issue.tech_detail || ""}
                     clickable={assigneeClickable}
                   />
                 </TableCell>
