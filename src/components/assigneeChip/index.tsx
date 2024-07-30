@@ -19,9 +19,10 @@ export const AssigneeChip: React.FC<AssigneeChipProps> = ({
 }) => {
   const { fetchActiveIssues } = useActiveIssuesStore();
   const { technicians, assignTechnician } = useTechniciansStore();
-  const technicianName =
-    technicians.find((technician) => technician.technician_id === technicianId)
-      ?.tech_name || "";
+  const technician = technicians.find(
+    (tech) => tech.technician_id === technicianId
+  );
+  const technicianName = technician?.tech_name || "";
   const { t } = useTranslation();
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -47,27 +48,57 @@ export const AssigneeChip: React.FC<AssigneeChipProps> = ({
     setAnchorEl(null);
   };
 
+  const splitName = technicianName.split(" ");
+  const firstName = splitName[0] || t("unassigned");
+  const lastName = splitName[1] || "";
+
   return (
     <Box>
       <Chip
         avatar={
-          <Avatar sx={{ backgroundColor: "blue" }}>
-            <Typography sx={{ color: "white", fontSize: "0.75rem" }}>
-              {technicianName.charAt(0) || "X"}
+          <Avatar
+            sx={{
+              backgroundColor: "blue",
+              width: "48px",
+              height: "48px",
+              fontSize: "0.5rem",
+            }}
+          >
+            <Typography sx={{ color: "white" }}>
+              {firstName.charAt(0) || "X"}
             </Typography>
           </Avatar>
         }
         label={
-          <span>
-            {technicianName.length > 0 ? technicianName : t("unassigned")}
-            {clickable &&
-              (anchorEl ? <ArrowDropUpIcon /> : <ArrowDropDownIcon />)}
-          </span>
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              width: "100%",
+              marginRight: "30px",
+            }}
+          >
+            <Box sx={{ flexGrow: 1, textAlign: "center" }}>
+              <div>{firstName}</div>
+              <div>{lastName}</div>
+            </Box>
+            {clickable && (
+              <Box sx={{ display: "flex", alignItems: "center" }}>
+                {anchorEl ? <ArrowDropUpIcon /> : <ArrowDropDownIcon />}
+              </Box>
+            )}
+          </Box>
         }
         onClick={handleClick}
         variant="filled"
         clickable={clickable}
-        className="w-[140px]"
+        sx={{
+          height: 50,
+          width: 200,
+          justifyContent: "space-around",
+          borderRadius: 100,
+        }}
+        // Set height to 48px, remove fixed width
       />
       <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleClose}>
         {technicians.map((technician) => (
