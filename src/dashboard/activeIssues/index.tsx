@@ -29,7 +29,7 @@ export const ActiveIssuesDashboard: React.FC = () => {
             color="primary"
             onClick={() => setIsNewIssueModalOpen(true)}
           >
-            {t("add_new_issue")}
+            {t("add_new_item")}
           </Button>
         </Box>
         <ActiveIssuesTable />
