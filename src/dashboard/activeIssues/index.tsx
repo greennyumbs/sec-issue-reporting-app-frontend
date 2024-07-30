@@ -12,8 +12,15 @@ export const ActiveIssuesDashboard: React.FC = () => {
   return (
     <>
       <Navbar />
-      <Container className="pt-[64px]">
-        <Box className="flex justify-between items-center py-[15px]">
+      <Container sx={{ pt: "64px" }}>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignContent: "center",
+            py: "15px",
+          }}
+        >
           <Typography variant="h4" component="h1">
             {t("active_issues")}
           </Typography>
