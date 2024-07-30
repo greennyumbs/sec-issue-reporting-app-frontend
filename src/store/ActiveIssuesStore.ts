@@ -40,6 +40,7 @@ const useActiveIssuesStore = create<ActiveLogsStoreProps>()(
     addTechDetail: async (body) => {
       try {
         const res = await axios.patch(`${url}/technician`, body);
+        console.log(res.data);
       } catch (e: any) {
         toast.error(e?.response?.data?.message);
       }

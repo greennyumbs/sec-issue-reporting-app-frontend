@@ -35,6 +35,7 @@ const useTechniciansStore = create<IssuesStoreProps>()(
     assignTechnician: async (body) => {
       try {
         const res = await axios.patch(`${url}/technician/assign`, body);
+        console.log(res.data);
       } catch (e) {
         toast.error("Error patching technicians");
       }

@@ -18,5 +18,6 @@
   "unassigned": "Unassigned",
   "select_role": "Select your role",
   "employee": "Employee",
-  "technician": "Technician"
+  "technician": "Technician",
+  "add_fix_detail": "Add Fix Detail"
 }
