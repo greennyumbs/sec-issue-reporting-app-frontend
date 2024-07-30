@@ -4,8 +4,8 @@ import axios from "axios";
 import toast from "react-hot-toast";
 
 export type Technician = {
-  technicianId: number;
-  technicianName: string;
+  id: number;
+  name: string;
 };
 
 export type TechnicianAssignProps = {
@@ -28,12 +28,14 @@ const useTechniciansStore = create<IssuesStoreProps>()(
       try {
         const res = await axios.get(`${url}/technician`);
 
-        const transformedData = res.data.map((item: { technician_id: number; tech_name: string; }) => {
-          return {
-            technicianId: item.technician_id,
-            technicianName: item.tech_name 
-          };
-        });
+        const transformedData = res.data.map(
+          (item: { technician_id: number; tech_name: string }) => {
+            return {
+              technicianId: item.technician_id,
+              technicianName: item.tech_name,
+            };
+          }
+        );
 
         set({ technicians: transformedData });
       } catch (e) {

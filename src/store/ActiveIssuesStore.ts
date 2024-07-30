@@ -13,7 +13,7 @@ export type TechDetailProps = {
 interface ActiveLogsStoreProps {
   activeIssues: Issue[];
   fetchActiveIssues: () => void;
-  addIssue: (body: Issue) => void;
+  addIssue: (body: any) => void;
   addTechDetail: (body: any) => void;
 }
 
