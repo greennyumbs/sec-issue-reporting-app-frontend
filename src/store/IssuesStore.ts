@@ -6,13 +6,17 @@ import { Machine } from "./MachineStore";
 import { Technician } from "./TechniciansStore";
 
 export type Issue = {
-  id: number;
-  detail: string | null;
-  techDetail: string | null;
-  technician: Technician | null;
+  issue_id: number;
+  machine_id: string;
+  issue_detail: string | null;
+  tech_detail: string;
+  technician_id: number;
   status: string;
-  updatedAt: string;
-  machinePart: Machine;
+  updated_at: string;
+  machine_part: {
+    name: string;
+    address: string;
+  };
 };
 
 interface IssuesStoreProps {

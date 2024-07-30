@@ -33,7 +33,6 @@ const useActiveIssuesStore = create<ActiveLogsStoreProps>()(
     addIssue: async (body) => {
       try {
         const res = await axios.post(`${url}/employee`, body);
-        console.log("Add New Issue: ", res.data);
       } catch (e: any) {
         toast.error(e?.response?.data?.message);
       }

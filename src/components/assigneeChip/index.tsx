@@ -3,33 +3,37 @@ import { MenuItem, Chip, Menu, Box, Avatar, Typography } from "@mui/material";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 import { useActiveIssuesStore } from "@/store/ActiveIssuesStore";
-import { getStatusColor } from "./utils";
-import { Technician, useTechniciansStore } from "@/store/TechniciansStore";
+import { useTechniciansStore } from "@/store/TechniciansStore";
+import { useTranslation } from "react-i18next";
 
-interface AssigneeChipProps extends Technician {
+interface AssigneeChipProps {
   issueId: number;
+  technicianId: number;
   clickable?: boolean;
 }
 
 export const AssigneeChip: React.FC<AssigneeChipProps> = ({
   issueId,
   technicianId,
-  technicianName,
   clickable = false,
 }) => {
   const { fetchActiveIssues } = useActiveIssuesStore();
   const { technicians, assignTechnician } = useTechniciansStore();
+  const technicianName =
+    technicians.find((technician) => technician.technician_id === technicianId)
+      ?.tech_name || "";
+  const { t } = useTranslation();
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
-  const handleAssigneeChange = (e: React.MouseEvent<HTMLElement>) => {
+  const handleAssigneeChange = async (e: React.MouseEvent<HTMLElement>) => {
     const newTechnicianId = (e.target as HTMLElement).getAttribute("value");
     const body = {
       issueId: issueId,
       technicianId: Number(newTechnicianId),
     };
-    assignTechnician(body);
-    fetchActiveIssues();
+    await assignTechnician(body);
+    await fetchActiveIssues();
     setAnchorEl(null);
   };
 
@@ -49,13 +53,13 @@ export const AssigneeChip: React.FC<AssigneeChipProps> = ({
         avatar={
           <Avatar sx={{ backgroundColor: "blue" }}>
             <Typography sx={{ color: "white", fontSize: "0.75rem" }}>
-              {technicianName.charAt(0) || "A"}
+              {technicianName.charAt(0) || "X"}
             </Typography>
           </Avatar>
         }
         label={
           <span>
-            {technicianName}
+            {technicianName.length > 0 ? technicianName : t("unassigned")}
             {clickable &&
               (anchorEl ? <ArrowDropUpIcon /> : <ArrowDropDownIcon />)}
           </span>
@@ -68,11 +72,11 @@ export const AssigneeChip: React.FC<AssigneeChipProps> = ({
       <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleClose}>
         {technicians.map((technician) => (
           <MenuItem
-            key={technician.technicianId}
-            value={technician.technicianId}
+            key={technician.technician_id}
+            value={technician.technician_id}
             onClick={(e) => handleAssigneeChange(e)}
           >
-            {technician.technicianName}
+            {technician.tech_name}
           </MenuItem>
         ))}
       </Menu>
