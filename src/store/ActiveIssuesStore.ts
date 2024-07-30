@@ -39,9 +39,7 @@ const useActiveIssuesStore = create<ActiveLogsStoreProps>()(
     },
     addTechDetail: async (body: TechDetailProps) => {
       try {
-        console.log(`Sending patch request with body: ${JSON.stringify(body)}`);
         const res = await axios.patch(`${url}/technician`, body);
-        console.log(`Patch request successful: ${JSON.stringify(res.data)}`);
       } catch (e: any) {
         console.error(
           `Patch request failed: ${JSON.stringify(e?.response?.data)}`
