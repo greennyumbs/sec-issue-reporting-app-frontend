@@ -2,14 +2,15 @@ import { create } from "zustand";
 import { devtools } from "zustand/middleware";
 import axios from "axios";
 import toast from "react-hot-toast";
+import { Machine } from "./MachineStore";
+import { Technician } from "./TechniciansStore";
 
 export type Issue = {
   issue_id: number;
   machine_id: string;
-  issue_detail: string;
-  tech_detail: string | null;
-  technician_id: number | null;
-  technician: Technician;
+  issue_detail: string | null;
+  tech_detail: string;
+  technician_id: number;
   status: string;
   updated_at: string;
   machine_part: {
@@ -17,10 +18,6 @@ export type Issue = {
     address: string;
   };
 };
-
-type Technician = {
-  tech_name: string | null;
-}
 
 interface IssuesStoreProps {
   issues: Issue[];

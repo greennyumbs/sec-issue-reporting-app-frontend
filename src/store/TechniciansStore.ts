@@ -4,8 +4,8 @@ import axios from "axios";
 import toast from "react-hot-toast";
 
 export type Technician = {
-  technicianId: number;
-  technicianName: string;
+  technician_id: number;
+  tech_name: string;
 };
 
 export type TechnicianAssignProps = {
@@ -27,21 +27,17 @@ const useTechniciansStore = create<IssuesStoreProps>()(
     fetchTechnicians: async () => {
       try {
         const res = await axios.get(`${url}/technician`);
-
-        const transformedData = res.data.map((item: { technician_id: number; tech_name: string; }) => {
-          return {
-            technicianId: item.technician_id,
-            technicianName: item.tech_name 
-          };
-        });
-
-        set({ technicians: transformedData });
+        set({ technicians: res.data });
       } catch (e) {
         toast.error("Error fetching technicians");
       }
     },
     assignTechnician: async (body) => {
-      console.log("Assign Technician to Issue: ", body);
+      try {
+        const res = await axios.patch(`${url}/technician/assign`, body);
+      } catch (e) {
+        toast.error("Error patching technicians");
+      }
     },
   }))
 );

@@ -45,11 +45,11 @@ export const CustomTable: React.FC<CustomTableProps> = ({
           <TableHead>
             <TableRow>
               <TableCell className="w-[150px]">{t("machine")}</TableCell>
-              <TableCell className="min-w-[300px]">
+              <TableCell className="min-w-[250px]">
                 {t("issue_detail")}
               </TableCell>
-              <TableCell className="min-w-[300px]">{t("fix_detail")}</TableCell>
-              <TableCell className="w-[150px]">{t("assignee")}</TableCell>
+              <TableCell className="min-w-[250px]">{t("fix_detail")}</TableCell>
+              <TableCell className="w-[250px]">{t("assignee")}</TableCell>
               <TableCell className="w-[150px]">{t("status")}</TableCell>
               <TableCell className="w-[120px]">{t("updated_at")}</TableCell>
             </TableRow>
@@ -78,8 +78,7 @@ export const CustomTable: React.FC<CustomTableProps> = ({
                 <TableCell>
                   <AssigneeChip
                     issueId={Issue.issue_id}
-                    technicianId={Issue.technician_id || -1}
-                    technicianName={Issue.technician?.tech_name || "Not Assigned"}
+                    technicianId={Issue.technician_id}
                     clickable={assigneeClickable}
                   />
                 </TableCell>
