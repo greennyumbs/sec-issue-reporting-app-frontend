@@ -15,7 +15,7 @@ export const Navbar: React.FC = () => {
 
   const handleLogout = async () => {
     await assignRole("");
-    router.push("/"); // Now you can use the router within handleLogout
+    router.push("/");
   };
 
   return (

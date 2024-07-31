@@ -5,6 +5,7 @@ import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 import { useActiveIssuesStore } from "@/store/ActiveIssuesStore";
 import { useTechniciansStore } from "@/store/TechniciansStore";
 import { useTranslation } from "react-i18next";
+import PersonOffIcon from "@mui/icons-material/PersonOff";
 
 interface AssigneeChipProps {
   issueId: number;
@@ -56,36 +57,57 @@ export const AssigneeChip: React.FC<AssigneeChipProps> = ({
     <Box>
       <Chip
         avatar={
-          <Avatar
-            sx={{
-              backgroundColor: "blue",
-              width: "48px",
-              height: "48px",
-              fontSize: "0.5rem",
-            }}
-          >
-            <Typography sx={{ color: "white" }}>
-              {firstName.charAt(0) || "X"}
-            </Typography>
-          </Avatar>
+          firstName !== t("unassigned") ? (
+            <Avatar
+              sx={{
+                backgroundColor: "blue",
+                width: "40px !important",
+                height: "40px !important",
+              }}
+            >
+              <Typography
+                sx={{
+                  color: "white",
+
+                  fontSize: "1.2rem",
+                }}
+              >
+                {firstName.charAt(0) || "X"}
+              </Typography>
+            </Avatar>
+          ) : (
+            <Avatar
+              sx={{
+                width: "40px !important",
+                height: "40px !important",
+              }}
+            >
+              <PersonOffIcon />
+            </Avatar>
+          )
         }
         label={
           <Box
             sx={{
               display: "flex",
               alignItems: "center",
-              width: "100%",
-              marginRight: "30px",
+              gap: 1,
             }}
           >
-            <Box sx={{ flexGrow: 1, textAlign: "center" }}>
-              <div>{firstName}</div>
-              <div>{lastName}</div>
+            <Box width={100}>
+              <Typography variant="body2" textAlign={"center"}>
+                {firstName}
+              </Typography>
+              <Typography variant="body2" textAlign={"center"}>
+                {lastName}
+              </Typography>
             </Box>
-            {clickable && (
+            {clickable ? (
               <Box sx={{ display: "flex", alignItems: "center" }}>
                 {anchorEl ? <ArrowDropUpIcon /> : <ArrowDropDownIcon />}
               </Box>
+            ) : (
+              <Box width={24} height={24}></Box>
             )}
           </Box>
         }
