@@ -14,10 +14,10 @@ import {
   Typography,
 } from "@mui/material";
 import AssigneeChip from "../assigneeChip";
-import { AddFixDetailButton } from "../addFixDetailButton";
 import StatusChip from "../statusChip";
 import { useTranslation } from "react-i18next";
 import { formatTimestamp } from "@/utils";
+import { AddFixDetailButton } from "../addFixDetailButton";
 
 export const ActiveIssuesTable: React.FC = () => {
   const { activeIssues, fetchActiveIssues } = useActiveIssuesStore();

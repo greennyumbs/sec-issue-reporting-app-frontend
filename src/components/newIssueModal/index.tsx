@@ -51,7 +51,7 @@ export const NewIssueModal: React.FC<NewIssueModalProps> = ({ onClose }) => {
 
   return (
     <Dialog open onClose={onClose}>
-      <DialogTitle>{t("add_new_item")}</DialogTitle>
+      <DialogTitle>{t("add_new_issue")}</DialogTitle>
       <DialogContent datatest-id="DialogContent">
         <Box component="form" noValidate autoComplete="off">
           <FormControl fullWidth margin="normal">
