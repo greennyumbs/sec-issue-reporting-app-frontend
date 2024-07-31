@@ -42,7 +42,6 @@ export const IssueTable: React.FC<WorkTableProps> = () => {
         elevation={0}
         sx={{
           borderRadius: 2,
-          overflow: "hidden",
           border: "1px solid",
           borderColor: "divider",
           width: "100%",
