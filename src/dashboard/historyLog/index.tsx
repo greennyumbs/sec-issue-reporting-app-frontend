@@ -8,7 +8,7 @@ export const HistoryLogDashboard: React.FC = () => {
   return (
     <>
       <Navbar />
-      <Container sx={{ pt: "64px" }}>
+      <Container sx={{ pt: "84px", px: "0px !important" }}>
         <Box
           sx={{
             display: "flex",

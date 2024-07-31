@@ -14,13 +14,11 @@ import { getThemedStyles } from "./styles";
 interface FixDetailBoxProps {
   issueId: number;
   techDetail: string;
-  clickable?: boolean;
 }
 
-export const FixDetailBox: React.FC<FixDetailBoxProps> = ({
+export const AddFixDetailButton: React.FC<FixDetailBoxProps> = ({
   issueId,
   techDetail,
-  clickable = false,
 }) => {
   const [newTechDetail, setNewTechDetail] = useState<string>(techDetail);
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
@@ -36,7 +34,6 @@ export const FixDetailBox: React.FC<FixDetailBoxProps> = ({
       };
       await addTechDetail(newTechDetailBody);
       await fetchActiveIssues();
-      console.log("done");
     } catch (error) {
       console.error("Failed to save tech detail:", error);
     }
@@ -60,36 +57,34 @@ export const FixDetailBox: React.FC<FixDetailBoxProps> = ({
   const { t } = useTranslation();
   return (
     <>
-      <Box sx={clickable ? styles.fixDetailBox : styles.fixDetailBoxHistory}>
-        {!clickable && (
-          <Typography
-            sx={{
-              whiteSpace: "pre-wrap",
-              wordWrap: "break-word",
-              maxWidth: "218px",
-            }}
-            variant="body2"
-            color="textSecondary"
-          >
-            {techDetail || "-"}
-          </Typography>
-        )}
-        {clickable && (
-          // <Button
-          //   onClick={(e) => handleEditClick(e)}
-          //   variant="contained"
-          //   sx={{ borderRadius: "100%" }}
-          // >
-          //   {t("add_fix_detail")}
-          // </Button>
-          <Chip
-            label={t("add_fix_detail")}
-            onClick={(e) => handleEditClick(e)}
-            variant="filled"
-            color="primary"
-            className="w-[140px]"
-          />
-        )}
+      <Box>
+        <Chip
+          label={
+            <Typography
+              variant="body2"
+              sx={{
+                whiteSpace: "pre-wrap",
+                wordWrap: "break-word",
+                maxWidth: "300px",
+                textAlign: "center",
+              }}
+            >
+              {t("add_fix_detail")}
+            </Typography>
+          }
+          sx={{
+            py: 1,
+            height: "auto",
+            "& .MuiChip-label": {
+              display: "block",
+              whiteSpace: "normal",
+            },
+          }}
+          onClick={(e) => handleEditClick(e)}
+          variant="outlined"
+          color="primary"
+          className="w-[140px]"
+        />
       </Box>
       <Popover
         id={id}
@@ -98,15 +93,15 @@ export const FixDetailBox: React.FC<FixDetailBoxProps> = ({
         onClose={handleClose}
         anchorOrigin={{
           vertical: "bottom",
-          horizontal: "left",
+          horizontal: "right",
         }}
         transformOrigin={{
           vertical: "top",
-          horizontal: "left",
+          horizontal: "right",
         }}
       >
         <Box p={2}>
-          <Box display="flex" flexDirection="column" width="300px">
+          <Box display="flex" flexDirection="column" width="500px">
             <TextField
               value={newTechDetail}
               onChange={(e) => setNewTechDetail(e.target.value)}
@@ -116,6 +111,14 @@ export const FixDetailBox: React.FC<FixDetailBoxProps> = ({
               fullWidth
             />
             <Box mt={2} display="flex" justifyContent="flex-end">
+              <Typography
+                textAlign={"right"}
+                mr={1}
+                fontSize={14}
+                color={"gray"}
+              >
+                {t("save_fix_detail_warning")}
+              </Typography>
               <Button onClick={handleSaveClick}>{t("save")}</Button>
             </Box>
           </Box>

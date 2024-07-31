@@ -10,6 +10,7 @@
   "history_logs": "History Logs",
   "logout": "Logout",
   "machine": "Machine",
+  "detail": "Detail",
   "issue_detail": "Issue Detail",
   "fix_detail": "Fix Detail",
   "assignee": "Assignee",
@@ -19,5 +20,6 @@
   "select_role": "Select your role",
   "employee": "Employee",
   "technician": "Technician",
-  "add_fix_detail": "Add Fix Detail"
+  "add_fix_detail": "Add Fix Detail",
+  "save_fix_detail_warning": "This will change the issue's status to 'Complete' and will be removed from active issue."
 }
